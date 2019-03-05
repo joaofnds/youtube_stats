@@ -14,7 +14,7 @@ defmodule YoutubeStats.Stats.Stat do
   @doc false
   def changeset(stat, attrs) do
     stat
-    |> cast(attrs, [:sub_count])
-    |> validate_required([:sub_count])
+    |> cast(attrs, [:channel_id, :sub_count])
+    |> validate_required([:channel_id, :sub_count])
   end
 end

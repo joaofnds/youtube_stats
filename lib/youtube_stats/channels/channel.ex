@@ -2,7 +2,7 @@ defmodule YoutubeStats.Channels.Channel do
   use Ecto.Schema
   import Ecto.Changeset
 
-  alias YoutubeStats.Stats.Stats
+  alias YoutubeStats.Stats.Stat
 
   schema "channels" do
     field :channel_id, :string
