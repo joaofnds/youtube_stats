@@ -8,6 +8,5 @@ defmodule YoutubeStats.Repo.Migrations.CreateChannels do
 
       timestamps()
     end
-
   end
 end

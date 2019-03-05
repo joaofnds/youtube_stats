@@ -2,10 +2,12 @@ defmodule YoutubeStats.Channels.Channel do
   use Ecto.Schema
   import Ecto.Changeset
 
+  alias YoutubeStats.Stats.Stats
 
   schema "channels" do
     field :channel_id, :string
     field :username, :string
+    has_many :stats, Stat
 
     timestamps()
   end
