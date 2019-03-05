@@ -8,5 +8,8 @@ defmodule YoutubeStats.Repo.Migrations.CreateChannels do
 
       timestamps()
     end
+
+    create unique_index(:channels, [:channel_id])
+    create unique_index(:channels, [:username])
   end
 end

@@ -17,5 +17,7 @@ defmodule YoutubeStats.Channels.Channel do
     channel
     |> cast(attrs, [:channel_id, :username])
     |> validate_required([:channel_id, :username])
+    |> unique_constraint(:username)
+    |> unique_constraint(:channel_id)
   end
 end
