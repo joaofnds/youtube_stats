@@ -62,24 +62,6 @@ defmodule YoutubeStats.Stats do
   end
 
   @doc """
-  Updates a stat.
-
-  ## Examples
-
-      iex> update_stat(stat, %{field: new_value})
-      {:ok, %Stat{}}
-
-      iex> update_stat(stat, %{field: bad_value})
-      {:error, %Ecto.Changeset{}}
-
-  """
-  def update_stat(%Stat{} = stat, attrs) do
-    stat
-    |> Stat.changeset(attrs)
-    |> Repo.update()
-  end
-
-  @doc """
   Deletes a Stat.
 
   ## Examples
