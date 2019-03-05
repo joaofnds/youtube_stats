@@ -2,7 +2,7 @@ defmodule YoutubeStatsWeb.UserSocket do
   use Phoenix.Socket
 
   ## Channels
-  channel "stats:*", YoutubeStatsWeb.StatsChannel
+  channel "stats", YoutubeStatsWeb.StatsChannel
 
   # Socket params are passed from the client and can
   # be used to verify and authenticate a user. After

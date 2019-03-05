@@ -56,37 +56,25 @@ defmodule YoutubeStats.Stats do
 
   """
   def create_stat(attrs \\ %{}) do
-    %Stat{}
-    |> Stat.changeset(attrs)
-    |> Repo.insert()
-  end
+    result =
+      %Stat{}
+      |> Stat.changeset(attrs)
+      |> Repo.insert()
 
-  @doc """
-  Deletes a Stat.
+    case result do
+      {:ok, stat} ->
+        stat = Repo.preload(stat, :channel)
 
-  ## Examples
+        YoutubeStatsWeb.Endpoint.broadcast(
+          "stats",
+          stat.channel.username,
+          %{sub_count: stat.sub_count}
+        )
 
-      iex> delete_stat(stat)
-      {:ok, %Stat{}}
+        {:ok, stat}
 
-      iex> delete_stat(stat)
-      {:error, %Ecto.Changeset{}}
-
-  """
-  def delete_stat(%Stat{} = stat) do
-    Repo.delete(stat)
-  end
-
-  @doc """
-  Returns an `%Ecto.Changeset{}` for tracking stat changes.
-
-  ## Examples
-
-      iex> change_stat(stat)
-      %Ecto.Changeset{source: %Stat{}}
-
-  """
-  def change_stat(%Stat{} = stat) do
-    Stat.changeset(stat, %{})
+      {:error, changeset} ->
+        {:error, changeset}
+    end
   end
 end
