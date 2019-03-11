@@ -11,9 +11,10 @@ defmodule YoutubeStats.Application do
       # Start the Ecto repository
       YoutubeStats.Repo,
       # Start the endpoint when the application starts
-      YoutubeStatsWeb.Endpoint
+      YoutubeStatsWeb.Endpoint,
       # Starts a worker by calling: YoutubeStats.Worker.start_link(arg)
       # {YoutubeStats.Worker, arg},
+      {YoutubeStats.IntervalWorker, [60000, &YoutubeStats.War.update_stats!/0]}
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
