@@ -7,6 +7,7 @@ defmodule YoutubeStats.Channels do
   alias YoutubeStats.Repo
 
   alias YoutubeStats.Channels.Channel
+  alias YoutubeStats.Stats.Stat
 
   @doc """
   Returns the list of channels.
@@ -52,6 +53,12 @@ defmodule YoutubeStats.Channels do
 
   defp get_channel_by_username!(username),
     do: Repo.one(from c in Channel, where: [username: ^username])
+
+  def get_last_stat(channel) do
+    from(s in Stat, where: [channel_id: ^channel.id])
+    |> last
+    |> Repo.one
+  end
 
   @doc """
   Creates a channel.
