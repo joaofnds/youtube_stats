@@ -1,7 +1,7 @@
 defmodule YoutubeStats.StatsTest do
   use YoutubeStats.DataCase
 
-  alias YoutubeStats.{Stats, Channels}
+  alias YoutubeStats.{Stats}
   alias YoutubeStats.Channels.Channel
 
   setup do
@@ -45,7 +45,7 @@ defmodule YoutubeStats.StatsTest do
       assert stat.sub_count == 42
     end
 
-    test "create_stat/1 with invalid data returns error changeset", %{channel: channel} do
+    test "create_stat/1 with invalid data returns error changeset" do
       assert {:error, %Ecto.Changeset{}} = Stats.create_stat(@invalid_attrs)
     end
   end

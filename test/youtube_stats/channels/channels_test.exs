@@ -24,9 +24,10 @@ defmodule YoutubeStats.ChannelsTest do
       assert Channels.list_channels() == [channel]
     end
 
-    test "get_channel!/1 returns the channel with given id" do
+    test "get_channel!/1 returns the channel with given id or username" do
       channel = channel_fixture()
       assert Channels.get_channel!(channel.id) == channel
+      assert Channels.get_channel!(channel.username) == channel
     end
 
     test "create_channel/1 with valid data creates a channel" do

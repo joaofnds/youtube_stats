@@ -22,7 +22,7 @@ defmodule YoutubeStats.Channels do
   end
 
   @doc """
-  Gets a single channel.
+  Gets a single channel, by either username or id.
 
   Raises `Ecto.NoResultsError` if the Channel does not exist.
 
@@ -31,11 +31,27 @@ defmodule YoutubeStats.Channels do
       iex> get_channel!(123)
       %Channel{}
 
+      iex> get_channel!("pewdiepie")
+      %Channel{}
+
       iex> get_channel!(456)
       ** (Ecto.NoResultsError)
 
   """
-  def get_channel!(id), do: Repo.get!(Channel, id)
+  def get_channel!(id_or_username) do
+    case id_or_username do
+      id when is_integer(id) ->
+        get_channel_by_id!(id)
+
+      username when is_bitstring(username) ->
+        get_channel_by_username!(username)
+    end
+  end
+
+  defp get_channel_by_id!(id), do: Repo.get!(Channel, id)
+
+  defp get_channel_by_username!(username),
+    do: Repo.one(from c in Channel, where: [username: ^username])
 
   @doc """
   Creates a channel.
@@ -100,5 +116,9 @@ defmodule YoutubeStats.Channels do
   """
   def change_channel(%Channel{} = channel) do
     Channel.changeset(channel, %{})
+  end
+
+  def fetch_channel_subs(%Channel{} = channel) do
+    YoutubeStats.YoutubeAPI.fetch_sub_count(channel.username)
   end
 end
