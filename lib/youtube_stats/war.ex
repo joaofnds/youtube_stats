@@ -1,6 +1,12 @@
 defmodule YoutubeStats.War do
   alias YoutubeStats.{Channels, Stats, YoutubeAPI}
 
+  def last_stats do
+    pewds_stat = pewds_channel() |> Channels.get_last_stat
+    tgay_stat = tgay_channel() |> Channels.get_last_stat
+    war_stats(pewds_stat, tgay_stat)
+  end
+
   def update_stats! do
     {:ok, pewds_stat} = pewds_channel() |> fetch_and_create_stat()
     {:ok, tgay_stat} = tgay_channel() |> fetch_and_create_stat()
@@ -8,12 +14,16 @@ defmodule YoutubeStats.War do
     YoutubeStatsWeb.Endpoint.broadcast(
       "stats",
       "war",
-      %{
-        pewds: pewds_stat.sub_count,
-        tgay: tgay_stat.sub_count,
-        gap: pewds_stat.sub_count - tgay_stat.sub_count
-      }
+      war_stats(pewds_stat, tgay_stat)
     )
+  end
+
+  defp war_stats(pewds_stat, tgay_stat) do
+    %{
+      pewds: pewds_stat.sub_count,
+      tgay: tgay_stat.sub_count,
+      gap: pewds_stat.sub_count - tgay_stat.sub_count
+    }
   end
 
   defp fetch_and_create_stat(channel) do
