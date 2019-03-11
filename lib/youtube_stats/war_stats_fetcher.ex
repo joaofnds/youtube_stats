@@ -1,5 +1,5 @@
 defmodule YoutubeStats.War do
-  alias YoutubeStats.{Channels,Stats,YoutubeAPI}
+  alias YoutubeStats.{Channels, Stats, YoutubeAPI}
 
   def update_stats! do
     {:ok, pewds_stat} = pewds_channel() |> fetch_and_create_stat()

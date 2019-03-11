@@ -7,6 +7,7 @@
 // Pass the token on params as below. Or remove it
 // from the params if you are not using authentication.
 import { Socket } from "phoenix";
+import { updateStats } from "./war";
 
 let socket = new Socket("/socket", { params: { token: window.userToken } });
 
@@ -66,7 +67,6 @@ channel
     console.log("Unable to join", resp);
   });
 
-channel.on("pewdiepie", console.log);
-channel.on("tseries", console.log);
+channel.on("war", updateStats);
 
 export default socket;
