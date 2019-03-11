@@ -1,5 +1,6 @@
 defmodule YoutubeStats.IntervalWorker do
   def start_link([interval, function]) do
+    function.()
     Task.start_link(fn -> loop(interval, function) end)
   end
 
